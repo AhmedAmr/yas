@@ -1,4 +1,4 @@
-# Yas - yAn aliasing manager for your terminal commands!
+# Yas - An aliasing manager for your terminal commands!
 
 ## Installation
 

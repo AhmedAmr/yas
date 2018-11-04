@@ -1,13 +1,31 @@
-
+import os
+# from tinydb import TinyDB, where
+from tinydb import *
+from cement.utils import fs
 from cement import App, TestApp, init_defaults
 from cement.core.exc import CaughtSignal
 from .core.exc import YasError
 from .controllers.base import Base
 
 # configuration defaults
-CONFIG = init_defaults('todo')
-CONFIG['todo']['foo'] = 'bar'
+CONFIG = init_defaults('yas')
+CONFIG['yas']['foo'] = 'bar'
+CONFIG['yas']['db_file'] = '~/.yas/db.json'
 
+
+def extend_tinydb(app):
+    db_file = app.config.get('yas', 'db_file')
+
+    # ensure that we expand the full path
+    db_file = fs.abspath(db_file)
+
+    # ensure our parent directory exists
+    db_dir = os.path.dirname(db_file)
+    if not os.path.exists(db_dir):
+        os.makedirs(db_dir)
+
+    app.extend('db', TinyDB(db_file))
+    app.extend('db_search',where)
 
 class Yas(App):
     """Yas primary application."""
@@ -43,6 +61,11 @@ class Yas(App):
         # register handlers
         handlers = [
             Base
+        ]
+
+        ## hooking application
+        hooks = [
+            ('post_setup', extend_tinydb)
         ]
 
 

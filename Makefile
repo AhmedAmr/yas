@@ -5,8 +5,8 @@ clean:
 
 virtualenv:
 	virtualenv --prompt '|> yas <| ' env
-	env/bin/pip install -r requirements-dev.txt
-	env/bin/python setup.py develop
+	pip install -r requirements-dev.txt
+	python setup.py develop
 	@echo
 	@echo "VirtualENV Setup Complete. Now run: source env/bin/activate"
 	@echo

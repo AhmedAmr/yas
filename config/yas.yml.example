@@ -24,6 +24,9 @@ yas:
 ### sample foo option
 # foo: bar
 
+### Database file path
+# db_file: ~/.yas/db.json
+
 
 log.colorlog:
 
